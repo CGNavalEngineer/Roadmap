@@ -51,4 +51,162 @@
       { id:"kayak",          label:"Sea Kayaking Season",                area:"adventure", start:3,  end:8,  note:"Nantucket trip, local area knowledge, guide work",                        status:"someday"   },
       { id:"teton",          label:"Grand Teton — Upper Exum",           area:"adventure", start:5,  end:7,  note:"Target July/August climbing window",                                      status:"someday"   },
       { id:"allagash",       label:"Allagash River Trip",                area:"adventure", start:5,  end:7,  note:"Summer canoe trip — family?",                                             status:"someday"   },
-      { id:"garage",         label:"Garage + Rock Wall Design",          area:"home",      start:5,  end:8,  note:"Find architect, plan design",                                             status:"someday"   },​​​​​​​​​​​​​​​​
+      { id:"garage",         label:"Garage + Rock Wall Design",          area:"home",      start:5,  end:8,  note:"Find architect, plan design",                                             status:"someday"   },
+      { id:"fpv_phase2",     label:"FPV Drone — Phase 2 (5\" build)",    area:"maker",     start:4,  end:7,  note:"TBS Source One V6, after simulator mastery",                              status:"someday"   },
+      { id:"emt_recert",     label:"EMT Recertification",                area:"community", start:6,  end:10, milestone:"Dec 2026",  note:"Due December 2026 — schedule course now",           status:"active"    },
+      { id:"fpv_phase3",     label:"FPV Drone — Phase 3 (ArduPilot)",    area:"maker",     start:7,  end:10, note:"GPS autonomy with Cube Orange",                                           status:"someday"   },
+      { id:"ski_build",      label:"Ski Build Project",                  area:"maker",     start:8,  end:11, note:"Camber mold, base cutting, design selection",                             status:"someday"   },
+      { id:"coffee",         label:"Coffee Roasting Business",           area:"maker",     start:5,  end:11, note:"License, water test, home inspection",                                    status:"someday"   },
+      { id:"ski_patrol",     label:"Ski Patrol Season",                  area:"community", start:10, end:11, note:"Shawnee Peak — OEC instructor path",                                      status:"recurring" },
+      { id:"christmas_mkts", label:"Christmas Markets Trip",             area:"adventure", start:10, end:11, note:"Dec 2026 — Europe",                                                       status:"someday"   },
+      { id:"orsted",         label:"Ørsted Operations",                  area:"work",      start:0,  end:11, note:"$34M offshore wind construction portfolio",                               status:"recurring" },
+      { id:"family_dates",   label:"Date Nights + Family Time",          area:"family",    start:0,  end:11, note:"Biweekly date nights, boys' activities, range trips",                     status:"recurring" },
+      { id:"ynab",           label:"YNAB Weekly Review",                 area:"finance",   start:0,  end:11, note:"Couples financial review — weekly recurring",                              status:"recurring" },
+    ];
+    const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const QUARTERS = ["Q1","Q2","Q3","Q4"];
+    const AREA_ORDER = ["certs","work","health","home","finance","family","community","maker","adventure"];
+    function Roadmap() {
+      const [filter, setFilter] = useState("all");
+      const [hover, setHover] = useState(null);
+      const [showSomeday, setShowSomeday] = useState(true);
+      const now = new Date();
+      const currentMonth = now.getMonth();
+      const dayOfMonth = now.getDate();
+      const daysInMonth = new Date(now.getFullYear(), currentMonth + 1, 0).getDate();
+      const todayPct = ((currentMonth + dayOfMonth / daysInMonth) / 12) * 100;
+      const filtered = PROJECTS.filter(p => {
+        if (!showSomeday && p.status === "someday") return false;
+        if (filter !== "all" && p.area !== filter) return false;
+        return true;
+      });
+      const laneGroups = AREA_ORDER
+        .map(area => ({ area, projects: filtered.filter(p => p.area === area) }))
+        .filter(g => g.projects.length > 0);
+      const mw = 100 / 12;
+      const barBg = (p) => {
+        const c = AREAS[p.area].color;
+        if (p.status === "someday")   return `${c}33`;
+        if (p.status === "recurring") return `repeating-linear-gradient(45deg,${c}88,${c}88 3px,${c}2a 3px,${c}2a 8px)`;
+        if (p.status === "urgent")    return `${c}ee`;
+        return `${c}cc`;
+      };
+      return (
+        <div style={{ fontFamily:"Georgia,serif", background:"#0d0d14", minHeight:"100vh", color:"#e8e6df" }}>
+          <div style={{ background:"linear-gradient(135deg,#1a1a2e,#16213e,#0f3460)", padding:"28px 36px 20px", borderBottom:"1px solid #2a2a4a" }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", flexWrap:"wrap", gap:12 }}>
+              <div>
+                <div style={{ fontSize:10, letterSpacing:"0.3em", color:"#5a7a9a", textTransform:"uppercase", marginBottom:4 }}>Andy Goshorn · 2026</div>
+                <h1 style={{ fontSize:26, fontWeight:"normal", color:"#e8e6df", letterSpacing:"0.02em" }}>Project Roadmap</h1>
+                <div style={{ fontSize:12, color:"#5a7a9a", marginTop:3 }}>{filtered.length} projects · {laneGroups.length} areas of focus</div>
+              </div>
+              <div style={{ display:"flex", gap:8, flexWrap:"wrap", alignItems:"center" }}>
+                <button onClick={() => setShowSomeday(s => !s)} style={{ padding:"5px 12px", borderRadius:4, border:"1px solid #3a4a6a", background: showSomeday?"#3a4a6a":"transparent", color:"#c8d8e8", fontSize:11, cursor:"pointer" }}>
+                  {showSomeday ? "Hide Someday ○" : "Show Someday ○"}
+                </button>
+                <select value={filter} onChange={e => setFilter(e.target.value)} style={{ padding:"5px 10px", borderRadius:4, border:"1px solid #3a4a6a", background:"#1a2a3a", color:"#c8d8e8", fontSize:11, cursor:"pointer" }}>
+                  <option value="all">All Areas</option>
+                  {AREA_ORDER.map(a => <option key={a} value={a}>{AREAS[a].label}</option>)}
+                </select>
+              </div>
+            </div>
+            <div style={{ display:"flex", gap:18, marginTop:16, flexWrap:"wrap" }}>
+              {[
+                { label:"Urgent", bg:"#E6394688", border:"#E63946" },
+                { label:"Active", bg:"#4a9effcc", border:"#4a9eff" },
+                { label:"Recurring", bg:"repeating-linear-gradient(45deg,#4a9eff88,#4a9eff88 3px,#4a9eff2a 3px,#4a9eff2a 8px)", border:"#4a9eff" },
+                { label:"Someday", bg:"#4a9eff33", border:"#4a9eff55" },
+              ].map(l => (
+                <div key={l.label} style={{ display:"flex", alignItems:"center", gap:6 }}>
+                  <div style={{ width:22, height:7, borderRadius:2, background:l.bg, border:`1px solid ${l.border}` }} />
+                  <span style={{ fontSize:10, color:"#5a7a9a", letterSpacing:"0.06em" }}>{l.label}</span>
+                </div>
+              ))}
+              <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+                <div style={{ width:2, height:12, background:"#ffd700", borderRadius:1 }} />
+                <span style={{ fontSize:10, color:"#5a7a9a", letterSpacing:"0.06em" }}>Today</span>
+              </div>
+            </div>
+          </div>
+          <div style={{ padding:"0 36px 48px", overflowX:"auto" }}>
+            <div style={{ position:"relative", marginTop:20, minWidth:600 }}>
+              <div style={{ display:"flex" }}>
+                {QUARTERS.map((q,qi) => (
+                  <div key={q} style={{ width:`${mw*3}%`, textAlign:"center", padding:"5px 0", fontSize:9, letterSpacing:"0.25em", color:"#4a5a7a", textTransform:"uppercase", borderRight:"1px solid #2a2a4a", background:["#1a1a2e33","#16213e33","#0f346033","#53348333"][qi] }}>
+                    {q}
+                  </div>
+                ))}
+              </div>
+              <div style={{ display:"flex", borderBottom:"1px solid #2a2a4a", marginBottom:4 }}>
+                {MONTHS.map((m,i) => (
+                  <div key={m} style={{ width:`${mw}%`, textAlign:"center", padding:"4px 0", fontSize:9, color: i===currentMonth?"#ffd700":"#3a4a6a", fontWeight: i===currentMonth?"bold":"normal", background: i===currentMonth?"#ffd70010":"transparent", borderRight:"1px solid #1a1a2e", letterSpacing:"0.08em" }}>
+                    {m.toUpperCase()}
+                  </div>
+                ))}
+              </div>
+              {laneGroups.map(({ area, projects }) => (
+                <div key={area}>
+                  <div style={{ padding:"8px 4px 3px", fontSize:9, color:AREAS[area].color, letterSpacing:"0.22em", textTransform:"uppercase", borderBottom:`1px solid ${AREAS[area].color}22` }}>
+                    ▸ {AREAS[area].label}
+                  </div>
+                  {projects.map(p => {
+                    const left  = (p.start / 12) * 100;
+                    const width = ((p.end - p.start + 1) / 12) * 100;
+                    const c     = AREAS[p.area].color;
+                    const isHov = hover === p.id;
+                    return (
+                      <div key={p.id} style={{ position:"relative", height:30, margin:"2px 0", cursor:"default" }}
+                           onMouseEnter={() => setHover(p.id)} onMouseLeave={() => setHover(null)}>
+                        {MONTHS.map((_,i) => (
+                          <div key={i} style={{ position:"absolute", left:`${(i/12)*100}%`, top:0, bottom:0, width:1, background: i===currentMonth?"#ffd70022":"#18182a", zIndex:0 }} />
+                        ))}
+                        <div style={{
+                          position:"absolute", left:`${left}%`, width:`${width}%`, top:3, height:22,
+                          borderRadius:3, background:barBg(p),
+                          border:`1px solid ${c}${p.status==="someday"?"33":"77"}`,
+                          borderLeft:`3px solid ${c}`,
+                          display:"flex", alignItems:"center", padding:"0 7px",
+                          boxSizing:"border-box", overflow:"hidden", whiteSpace:"nowrap",
+                          transition:"box-shadow 0.12s",
+                          boxShadow: isHov ? `0 0 14px ${c}55` : "none",
+                          zIndex:1,
+                        }}>
+                          <span style={{ fontSize:10, color: p.status==="someday"?`${c}88`:"#dde6ee", overflow:"hidden", textOverflow:"ellipsis" }}>
+                            {p.label}{p.status==="recurring"?" ↻":p.status==="someday"?" ○":""}
+                            {p.milestone && <span style={{ marginLeft:6, fontSize:9, color:"#ffd700", fontWeight:"bold" }}>⬥ {p.milestone}</span>}
+                          </span>
+                        </div>
+                        <div style={{ position:"absolute", left:`${todayPct}%`, top:0, bottom:0, width:2, background:"#ffd70055", zIndex:2 }} />
+                        {isHov && (
+                          <div style={{
+                            position:"absolute", left:`${Math.min(left+1,52)}%`, top:26, zIndex:20,
+                            background:"#141828", border:`1px solid ${c}99`, borderRadius:6,
+                            padding:"10px 14px", minWidth:200, maxWidth:280,
+                            boxShadow:`0 8px 28px #00000099`, pointerEvents:"none",
+                          }}>
+                            <div style={{ fontSize:12, fontWeight:"bold", color:"#e8e6df", marginBottom:4 }}>{p.label}</div>
+                            <div style={{ fontSize:10, color:"#6a8aaa", marginBottom:4 }}>{AREAS[p.area].label} · {MONTHS[p.start]}–{MONTHS[p.end]} 2026</div>
+                            {p.milestone && <div style={{ fontSize:10, color:"#ffd700", marginBottom:4 }}>⬥ {p.milestone}</div>}
+                            <div style={{ fontSize:10, color:"#7a8faa", lineHeight:1.55 }}>{p.note}</div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+              <div style={{ position:"absolute", top:0, bottom:0, left:`${todayPct}%`, width:2, background:"linear-gradient(to bottom,#ffd700,#ffd70011)", zIndex:5, pointerEvents:"none" }} />
+            </div>
+          </div>
+          <div style={{ padding:"12px 36px", borderTop:"1px solid #1a1a2e", display:"flex", gap:20, flexWrap:"wrap" }}>
+            {Object.entries(filtered.reduce((a,p) => { a[p.status]=(a[p.status]||0)+1; return a; }, {})).map(([s,n]) => (
+              <div key={s} style={{ fontSize:10, color:"#3a4a6a", letterSpacing:"0.1em" }}>{n} <span style={{ textTransform:"uppercase" }}>{s}</span></div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById("root")).render(<Roadmap />);
+  </script>
+</body>
+</html>
