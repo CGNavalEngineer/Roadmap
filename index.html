@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Andy Goshorn · 2026 Roadmap</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0d0d14; }
+    select option { background: #1a2a3a; color: #c8d8e8; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0d0d14; }
+    ::-webkit-scrollbar-thumb { background: #2a2a4a; border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState } = React;
+    const AREAS = {
+      certs:     { label: "Certifications",     color: "#E63946" },
+      work:      { label: "Work / Ørsted",       color: "#2B6CB0" },
+      home:      { label: "Home & House",        color: "#2D6A4F" },
+      health:    { label: "Health & Fitness",    color: "#9B2335" },
+      maker:     { label: "Maker / Build",       color: "#7B5EA7" },
+      finance:   { label: "Finance",             color: "#B7791F" },
+      family:    { label: "Family & Kids",       color: "#2C7A7B" },
+      community: { label: "Community",           color: "#5A6772" },
+      adventure: { label: "Adventure / Travel",  color: "#C05621" },
+    };
+    const PROJECTS = [
+      { id:"pmp",            label:"PMP Exam",                           area:"certs",     start:0,  end:2,  milestone:"Mar 25",  note:"#1 priority — 19 days away",                          status:"urgent"    },
+      { id:"spi",            label:"AMGA SPI Exam",                      area:"certs",     start:0,  end:4,  milestone:"May 2–3", note:"5 outdoor practice sessions needed in April",          status:"urgent"    },
+      { id:"spi_practice",   label:"SPI Outdoor Practice (5 sessions)",  area:"certs",     start:2,  end:3,  note:"April weekends — Cathedral, Whitehorse, Rumney",                           status:"active"    },
+      { id:"taxes",          label:"2025 Taxes",                         area:"finance",   start:0,  end:2,  note:"Roth recharacterization + backdoor conversion",                            status:"active"    },
+      { id:"logmad_repairs", label:"Logmad Repairs",                     area:"home",      start:0,  end:2,  note:"Sun Touch controller, shed window, ski pants",                             status:"active"    },
+      { id:"syl_q1",         label:"SYL Google Site",                    area:"community", start:0,  end:2,  note:"Scarborough Youth Lacrosse board task",                                    status:"active"    },
+      { id:"yap",            label:"YAP Program",                        area:"community", start:0,  end:3,  note:"Young Adult Patrol — Pleasant Mountain",                                   status:"active"    },
+      { id:"dexa",           label:"DEXA + Health Baseline",             area:"health",    start:1,  end:3,  note:"A1C review, BP monitoring, dermatologist",                                 status:"active"    },
+      { id:"attic",          label:"Attic Insulation",                   area:"home",      start:1,  end:3,  note:"Estimate → buy ladder → purchase insulation → install",                   status:"active"    },
+      { id:"roof",           label:"Roof Inspection + Estimates",        area:"home",      start:1,  end:3,  note:"Get quotes before summer",                                                 status:"active"    },
+      { id:"teton_training", label:"Grand Teton Training",               area:"health",    start:0,  end:6,  note:"Hangboard 3x/week, cardio, climbing fitness",                             status:"active"    },
+      { id:"lacrosse",       label:"Youth Lacrosse Season",              area:"community", start:2,  end:6,  note:"SYL coordination + registration",                                         status:"recurring" },
+      { id:"house_q2",       label:"House Projects (fans, closets)",     area:"home",      start:3,  end:5,  note:"Bathroom fans, tech closet org, library",                                 status:"active"    },
+      { id:"fishing",        label:"Fishing Gear + Season Prep",         area:"adventure", start:3,  end:5,  note:"Live well, throttle, Garmin fish finder, nets, grips",                    status:"someday"   },
+      { id:"freighter",      label:"Freighter Repairs",                  area:"maker",     start:3,  end:5,  note:"Q2 boat season prep — blocks, furring strips",                            status:"someday"   },
+      { id:"duck_blind",     label:"Duck Blind Build",                   area:"adventure", start:3,  end:5,  note:"Q2 build project",                                                        status:"someday"   },
+      { id:"kayak",          label:"Sea Kayaking Season",                area:"adventure", start:3,  end:8,  note:"Nantucket trip, local area knowledge, guide work",                        status:"someday"   },
+      { id:"teton",          label:"Grand Teton — Upper Exum",           area:"adventure", start:5,  end:7,  note:"Target July/August climbing window",                                      status:"someday"   },
+      { id:"allagash",       label:"Allagash River Trip",                area:"adventure", start:5,  end:7,  note:"Summer canoe trip — family?",                                             status:"someday"   },
+      { id:"garage",         label:"Garage + Rock Wall Design",          area:"home",      start:5,  end:8,  note:"Find architect, plan design",                                             status:"someday"   },​​​​​​​​​​​​​​​​
