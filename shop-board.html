@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andy's Shop Board</title>
+<style>
+  :root{
+    --bg:#12100d; --panel:#1c1915; --panel2:#242019; --ink:#ede5d8; --dim:#9b8f7d;
+    --amber:#e8a33d; --green:#7fb069; --red:#d95d4e; --blue:#6ca6c1; --purple:#a48fc0;
+    --line:#332d24;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font:16px/1.5 "Avenir Next","Helvetica Neue",sans-serif;padding:28px 22px 60px}
+  .wrap{max-width:1240px;margin:0 auto}
+  header{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;margin-bottom:6px}
+  h1{font-size:30px;letter-spacing:.5px}
+  h1 span{color:var(--amber)}
+  .date{color:var(--dim);font-size:14px}
+  .tagline{color:var(--dim);font-style:italic;margin-bottom:20px}
+  .statbar{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:26px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 16px;text-align:center;min-width:110px}
+  .stat b{display:block;font-size:22px;color:var(--amber)}
+  .stat small{color:var(--dim);font-size:12px}
+  .stat.warn b{color:var(--red)}
+  .stat.good b{color:var(--green)}
+  h2{font-size:15px;text-transform:uppercase;letter-spacing:2px;color:var(--dim);margin:30px 0 12px;border-bottom:1px solid var(--line);padding-bottom:6px}
+  h2 .flame{color:var(--amber)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--dim);border-radius:10px;padding:14px 16px}
+  .card h3{font-size:17px;margin-bottom:2px}
+  .card .meta{font-size:12px;color:var(--dim);margin-bottom:8px}
+  .card ul{list-style:none;margin-top:6px}
+  .card li{padding:3px 0 3px 2px;font-size:14px;display:flex;gap:8px;align-items:flex-start}
+  .card li input{margin-top:4px;accent-color:var(--amber)}
+  .card li.done{color:var(--dim);text-decoration:line-through}
+  .big3 .card{border-left-color:var(--amber);background:linear-gradient(160deg,#262016,var(--panel) 60%)}
+  .jump .card{border-left-color:var(--blue)}
+  .motion .card{border-left-color:var(--green)}
+  .stalled .card{border-left-color:var(--red);}
+  .code .card{border-left-color:var(--purple)}
+  .chip{display:inline-block;font-size:11px;padding:1px 8px;border-radius:20px;margin-left:6px;vertical-align:middle;font-weight:600}
+  .chip.hot{background:#3a2c14;color:var(--amber)}
+  .chip.new{background:#1e2f3a;color:var(--blue)}
+  .chip.stall{background:#3a1f1b;color:var(--red)}
+  .chip.go{background:#22301c;color:var(--green)}
+  .chip.hold{background:#2c2536;color:var(--purple)}
+  .why{font-size:13px;color:var(--dim);border-top:1px dashed var(--line);margin-top:8px;padding-top:6px}
+  .deadline{display:flex;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 14px;margin-bottom:8px;font-size:14px}
+  .deadline .d{min-width:86px;font-weight:700;color:var(--amber)}
+  .deadline.over .d{color:var(--red)}
+  .winbox{background:linear-gradient(160deg,#20301c,var(--panel));border:1px solid #2e4526;border-radius:10px;padding:12px 16px;font-size:14px}
+  .idea-note{background:var(--panel2);border:1px dashed var(--line);border-radius:10px;padding:12px 16px;font-size:14px;color:var(--dim);margin-top:14px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  @media(max-width:900px){.cols{grid-template-columns:1fr}}
+  footer{margin-top:36px;color:var(--dim);font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Andy's <span>Shop Board</span></h1>
+  <span class="date">Sourced from OmniFocus + Project Files &middot; July 19, 2026</span>
+</header>
+<p class="tagline">"Live the way you want to be, not where you are." &mdash; your own note, in your own OmniFocus.</p>
+
+<div class="statbar">
+  <div class="stat"><b>61</b><small>projects in OmniFocus</small></div>
+  <div class="stat"><b>308</b><small>open actions</small></div>
+  <div class="stat warn"><b>11</b><small>inbox items unfiled</small></div>
+  <div class="stat warn"><b>60</b><small>projects awaiting review</small></div>
+  <div class="stat good"><b>3</b><small>shop files touched this week</small></div>
+</div>
+
+<h2><span class="flame">&#9873;</span> The Big Three &mdash; finish these first</h2>
+<div class="grid big3">
+  <div class="card">
+    <h3>L-44 Half Hull <span class="chip go">CLOSE TO DONE</span></h3>
+    <div class="meta">OmniFocus: Open Projects &middot; files: Boats/L-44 (May '26)</div>
+    <ul>
+      <li><input type="checkbox">Paint new boards (3rd coat on first board)</li>
+      <li><input type="checkbox">Cut hanging holes in boards</li>
+      <li><input type="checkbox">Get plaque made &mdash; Crown Trophy</li>
+      <li><input type="checkbox">Mount hull + plaque</li>
+      <li><input type="checkbox">Present it</li>
+    </ul>
+    <div class="why">You're in the paint-and-mount phase &mdash; the hard modeling is DONE. Two shop sessions and this one's on a wall.</div>
+  </div>
+  <div class="card">
+    <h3>Fix Chrissy's Drawer <span class="chip hot">QUICK WIN</span></h3>
+    <div class="meta">Sitting in your OmniFocus inbox, unfiled</div>
+    <ul>
+      <li><input type="checkbox">Diagnose: slide, glue joint, or bottom panel?</li>
+      <li><input type="checkbox">Fix it &mdash; likely a one-evening job</li>
+    </ul>
+    <div class="why">Smallest project on the board, biggest goodwill-per-hour ratio in the house.</div>
+  </div>
+  <div class="card">
+    <h3>Drying Rack (+ Hops Flag Pole) <span class="chip hot">CAD ACTIVE YESTERDAY</span></h3>
+    <div class="meta">drying rack.3dm + Hops Flag Pole and Drying Rack.3dm &middot; edited Jul 18 &middot; NOT in OmniFocus</div>
+    <ul>
+      <li><input type="checkbox">Finalize design in Rhino</li>
+      <li><input type="checkbox">Cut list + buy materials</li>
+      <li><input type="checkbox">Build &mdash; pairs with "Post for hops" task already in OF</li>
+    </ul>
+    <div class="why">Momentum is right now &mdash; you touched the CAD yesterday. Ride it. Needs an OmniFocus project so it doesn't vanish.</div>
+  </div>
+</div>
+
+<h2>&#9889; Jump-Start Lane &mdash; you asked to get back into these</h2>
+<div class="grid jump">
+  <div class="card">
+    <h3>PLM Ski Patrol Sign <span class="chip stall">IDLE 9 MONTHS</span></h3>
+    <div class="meta">Files last touched Oct 18, 2025 &middot; OF next action ready</div>
+    <ul>
+      <li><input type="checkbox">Buy screws + really good white paint (one errand)</li>
+      <li><input type="checkbox">Screw wood together, join the edges</li>
+      <li><input type="checkbox">Paint white</li>
+    </ul>
+    <div class="why">Restart cost is one hardware-store run. Finish it before patrol season and walk into the hut a hero.</div>
+  </div>
+  <div class="card">
+    <h3>Lobstering <span class="chip new">PROMOTE TO PROJECT</span></h3>
+    <div class="meta">Lobster folder: LEEDS certificate ready (Jul 4) &middot; not in OmniFocus</div>
+    <ul>
+      <li><input type="checkbox">Upload certificate to LEEDS</li>
+      <li><input type="checkbox">Paint the buoys</li>
+      <li><input type="checkbox">Rig pots + bait plan</li>
+      <li><input type="checkbox">Pots in the water</li>
+    </ul>
+    <div class="why">It's mid-July in Maine &mdash; every week of delay is lobster you're not eating. Most seasonal item on this board.</div>
+  </div>
+  <div class="card">
+    <h3>Ski Patrol Helmet Holders <span class="chip new">NEW IDEA &mdash; CAPTURE IT</span></h3>
+    <div class="meta">Not in OmniFocus or Project Files yet</div>
+    <ul>
+      <li><input type="checkbox">Sketch design (CNC? 3D print? — you have both)</li>
+      <li><input type="checkbox">Count how many patrol needs</li>
+      <li><input type="checkbox">Prototype one</li>
+    </ul>
+    <div class="why">Off-season is the time to build patrol gear. December-you will thank July-you.</div>
+  </div>
+  <div class="card">
+    <h3>YAP Face Board Display <span class="chip new">NEW IDEA &mdash; CAPTURE IT</span></h3>
+    <div class="meta">Pairs with existing YAP project + "Yap interest form" inbox item</div>
+    <ul>
+      <li><input type="checkbox">Define it: photos + names of YAPs? Size? Where does it hang?</li>
+      <li><input type="checkbox">Design + cut (Troop 39 sign workflow reuses here)</li>
+    </ul>
+    <div class="why">You already have the CNC sign pipeline proven (Troop 39). Same recipe, new board.</div>
+  </div>
+</div>
+
+<div class="cols">
+<div>
+<h2>&#128293; Already in Motion &mdash; keep the streak</h2>
+<div class="grid motion" style="grid-template-columns:1fr">
+  <div class="card">
+    <h3>Sauna <span class="chip hot">FILES TOUCHED YESTERDAY</span></h3>
+    <div class="meta">Sauna Design/ (parametric Rhino + render, Jul 18) &middot; inbox: "Claude build a sauna in rhino"</div>
+    <div class="why">Design phase is alive. Next: pick footprint + budget, then it becomes a real build project. (Rove sessions = market research.)</div>
+  </div>
+  <div class="card">
+    <h3>Golf range tracking with Henry <span class="chip go">ACTIVE</span></h3>
+    <div class="meta">Range reports + range card, Jul 17</div>
+    <div class="why">Fun dad-project, already self-sustaining. Nothing needed &mdash; just noting the streak.</div>
+  </div>
+  <div class="card">
+    <h3>Freighter model <span class="chip go">ACTIVE IN OF</span></h3>
+    <div class="meta">Next: attach stringers to frames &middot; stern plug (Cabela's errand)</div>
+    <div class="why">Winter-friendly bench work. Fine to simmer behind the Big Three.</div>
+  </div>
+  <div class="card">
+    <h3>Go Cart <span class="chip go">RECENT</span></h3>
+    <div class="meta">Jigs cut May 31 &middot; not in OmniFocus</div>
+    <div class="why">Second un-captured active build. Deserves a project with a next action so it doesn't drift into the stalled pile.</div>
+  </div>
+</div>
+
+<h2>&#128187; Coding Projects &mdash; pick ONE</h2>
+<div class="grid code" style="grid-template-columns:1fr">
+  <div class="card">
+    <h3>The honest list <span class="chip hold">NEEDLE NOT MOVING</span></h3>
+    <div class="meta">Coding/: YAFASC &middot; Garmin BoulderTracker &middot; Biggest Loser &middot; CoinChase &middot; KartTimer &middot; EMOM (last touched May '26)</div>
+    <div class="why">Six part-built apps is why none ship. Suggestion: <b>Garmin Boulder App</b> is the smallest scope with a real user (you, at the gym). Park the other five in Someday without guilt &mdash; they're one OmniFocus drag away from revival.</div>
+  </div>
+</div>
+
+<h2>&#127942; Recent Win</h2>
+<div class="winbox">&#10004; <b>SPI Exam — DONE.</b> You built a 60-item training plan, executed it, and passed. That's proof the system works when a project has a date and a next action. That's the template.</div>
+</div>
+
+<div>
+<h2>&#9200; Deadlines &amp; Admin &mdash; don't get ambushed</h2>
+<div class="deadline over"><span class="d">TODAY 7/19</span> Mini state inspection due</div>
+<div class="deadline over"><span class="d">OVERDUE 7/16</span> "Pictures" (inbox)</div>
+<div class="deadline"><span class="d">Jul 27&ndash;Aug 3</span> Router firmware update window</div>
+<div class="deadline"><span class="d">Aug 10</span> Allie + Maple flea/tick &amp; heartworm (flagged)</div>
+<div class="deadline"><span class="d">Sep 10</span> Water softener salts</div>
+<div class="deadline"><span class="d">Oct 11</span> Test run generator</div>
+<div class="deadline"><span class="d">Oct 15</span> <b>Roth IRA recharacterization hard deadline</b> (2025 Taxes project &mdash; 6% penalty after this)</div>
+<div class="deadline"><span class="d">Dec 1</span> <b>EMT recert</b> &mdash; your one certification this year; chip at continuing-ed hours monthly</div>
+
+<h2>&#128683; Stalled &mdash; revive or archive, but decide</h2>
+<div class="grid stalled" style="grid-template-columns:1fr">
+  <div class="card">
+    <h3>On hold in OmniFocus (since Oct '25)</h3>
+    <ul>
+      <li>Ski Build &mdash; shop files untouched since 2022. Keep on hold until CNC table is rebuilt?</li>
+      <li>Duck Blind &middot; Canoe &mdash; same c-form/laminate work; if one revives, both do</li>
+      <li>Freighter repair (full-size) &mdash; paint interior, fix throttle</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Active on paper, dead in practice</h3>
+    <ul>
+      <li>Coffee Roasting license &mdash; water-test email is from <b>2021</b>. Recommit or archive.</li>
+      <li>Insulate the Attic &mdash; zero steps done; do it before fall or punt to '27</li>
+      <li>Surfboard Trainer &middot; Goshorn 21 &middot; Recover Drobo &middot; photo uploads 2015&ndash;2019</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Shop folder ghosts (no OF project, files 9&ndash;16 months old)</h3>
+    <ul>
+      <li>Bronco ARB plate &middot; NSP Hook drill plate (Mar '25)</li>
+      <li>Chrissy Medal Hanger (Jul '25) &mdash; she'd love this one back</li>
+      <li>Hockey Rink Expansion (Aug '25) &mdash; decide before the ground freezes</li>
+      <li>Troop 39 Sign &mdash; G-code exists; is it actually done? Mark or finish</li>
+      <li>Fishing Rod Holder &mdash; inbox already nudging: add 3D-printed angle parts</li>
+      <li>End table &middot; Home Wall &middot; Chrissy grow light &middot; Shed ideas &middot; Trailer plate</li>
+    </ul>
+  </div>
+</div>
+
+<div class="idea-note"><b>Idea garden, not a graveyard:</b> Projects Inbox + Hobbies Inbox hold 20+ sparks (tide calculator, cribbage board, CNC stool, water pump, tent apron, whiteboard for shop&hellip;). They're safe there. The dashboard only asks you to <i>decide</i> on the stalled ones &mdash; the ideas keep.</div>
+</div>
+</div>
+
+<footer>Check a box to feel good &mdash; then go make sawdust. &middot; Rebuild me anytime: "Claude, refresh my shop board."</footer>
+
+<script>
+document.querySelectorAll('li input').forEach(cb=>{
+  const key='shopboard:'+cb.parentElement.textContent.trim();
+  if(localStorage.getItem(key)==='1'){cb.checked=true;cb.parentElement.classList.add('done');}
+  cb.addEventListener('change',()=>{
+    cb.parentElement.classList.toggle('done',cb.checked);
+    localStorage.setItem(key,cb.checked?'1':'0');
+  });
+});
+</script>
+</body>
+</html>
